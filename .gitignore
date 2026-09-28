@@ -54,6 +54,7 @@ secrets.json
 coverage/
 
 *.md
+*.txt
 # Logs, Dumps & Diagnostics
 *.log
 *.binlog
