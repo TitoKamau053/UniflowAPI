@@ -1,0 +1,70 @@
+# UniflowApi - .gitignore (.NET 8 Web API / JetBrains Rider)
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+build/
+
+# JetBrains Rider & IntelliJ IDEA
+.idea/
+*.sln.iml
+
+# Visual Studio & VS Code
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# NuGet Packages & Caches
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+
+# Publish & Deployment Outputs
+[Pp]ublish/
+publish/
+*.pubxml
+*.pubxml.user
+
+# Environment, Secrets & Local Settings
+appsettings.Development.json
+appsettings.*.local.json
+appsettings.local.json
+secrets.json
+.env
+.env.*
+!.env.example
+
+# Test Results & Code Coverage
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+
+# Logs, Dumps & Diagnostics
+*.log
+*.binlog
+*.dmp
+*.dump
+*.crash
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
