@@ -53,6 +53,7 @@ secrets.json
 *.coveragexml
 coverage/
 
+*.md
 # Logs, Dumps & Diagnostics
 *.log
 *.binlog
