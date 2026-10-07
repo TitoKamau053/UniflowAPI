@@ -24,9 +24,7 @@ public class AdminController : ControllerBase
         _me = me;
         _sms = sms;
     }
-
-    /// Sets or rotates the caller's OWN scheme's Equity biller credentials.
-    /// Equity itself never calls this — it's admin-facing only.
+    
     [HttpPut("equity-credentials")]
     public async Task<IActionResult> SetEquityCredentials([FromBody] SetEquityCredentialsRequest request)
     {
@@ -42,8 +40,6 @@ public class AdminController : ControllerBase
 
         return Ok(ApiResponse.Ok("Equity biller credentials saved"));
     }
-
-    //Dashboard & analytics
 
     [HttpGet("dashboard")]
     public async Task<IActionResult> Dashboard()
@@ -80,7 +76,6 @@ public class AdminController : ControllerBase
         return Ok(ApiResponse<IEnumerable<dynamic>>.Ok(customers));
     }
 
-    ///Returns the full unpaginated set for client-side CSV/JSON export — formatting itself happens on the client.
     [HttpGet("customers/export")]
     public async Task<IActionResult> ExportCustomers()
     {
@@ -102,7 +97,6 @@ public class AdminController : ControllerBase
         return Ok(ApiResponse<dynamic>.Ok(health));
     }
 
-    // Meter readings (batch)
     [HttpGet("meter-readings/customers")]
     public async Task<IActionResult> CustomersForReading([FromQuery] DateOnly month)
     {
@@ -118,7 +112,6 @@ public class AdminController : ControllerBase
         return Ok(ApiResponse.Ok($"{readings.Length} readings submitted"));
     }
 
-    // SMS
     [HttpGet("sms/status")]
     public async Task<IActionResult> SmsStatus()
     {
@@ -154,7 +147,6 @@ public class AdminController : ControllerBase
         return Ok(ApiResponse<object>.Ok(new { attempted = request.CustomerIds.Length, sent, failed }, "Bulk send complete"));
     }
 
-    ///Same approach as Nyanjigi: no webhook, just a poll against Africa's Talking's recent-messages list (see ISmsGateway.GetDeliveryStatusAsync).
     [HttpGet("sms/delivery-status/{messageId}")]
     public async Task<IActionResult> SmsDeliveryStatus(string messageId)
     {
@@ -195,7 +187,6 @@ public class AdminController : ControllerBase
         return result.Success ? Ok(ApiResponse.Ok("Confirmation sent")) : throw ApiException.Validation(result.Error ?? "SMS send failed");
     }
 
-    ///"Multi-channel" today means SMS only — the Message field is free-text so admins can compose whatever the situation calls for.
     [HttpPost("notifications/custom")]
     public async Task<IActionResult> SendCustom([FromBody] SendDirectNotificationRequest request)
     {
