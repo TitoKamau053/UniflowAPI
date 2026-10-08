@@ -80,10 +80,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("type", "admin"));
-    options.AddPolicy("CustomerOnly", policy => policy.RequireClaim("type", "customer"));
-    options.AddPolicy("EquityBillerOnly", policy => policy.RequireClaim("type", "equity_biller"));
-    options.AddPolicy("SuperAdminOnly", policy => policy.RequireClaim("type", "superadmin"));
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireAssertion(ctx =>
+        {
+            var t = ctx.User.FindFirst("type")?.Value;
+            return t is "admin" or "superadmin";
+        }));
+
+    options.AddPolicy("SchemeAdminOnly", policy =>
+        policy.RequireClaim("type", "admin"));
+
+    options.AddPolicy("CustomerOnly", policy =>
+        policy.RequireClaim("type", "customer"));
+
+    options.AddPolicy("EquityBillerOnly", policy =>
+        policy.RequireClaim("type", "equity_biller"));
+
+    options.AddPolicy("SuperAdminOnly", policy =>
+        policy.RequireClaim("type", "superadmin"));
 });
 
 builder.Services.AddTransient<UniflowApi.Middleware.EquityIpWhitelistMiddleware>();
